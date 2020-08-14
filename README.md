@@ -1,6 +1,4 @@
-Statistics Computed
-
-You will learn about bike share use in Chicago, New York City, and Washington by computing a variety of descriptive statistics. In this project, you'll write code to provide the following information:
+Requirements:
 
 #1 Popular times of travel (i.e., occurs most often in the start time)
 
@@ -24,3 +22,9 @@ You will learn about bike share use in Chicago, New York City, and Washington by
     counts of each user type
     counts of each gender (only available for NYC and Chicago)
     earliest, most recent, most common year of birth (only available for NYC and Chicago)
+
+#Resources
+
+https://stackoverflow.com/questions/53037698/how-can-i-find-the-most-frequent-two-column-combination-in-a-dataframe-in-python
+
+https://stackoverflow.com/questions/48590268/pandas-get-the-most-frequent-values-of-a-column
