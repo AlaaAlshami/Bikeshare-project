@@ -21,7 +21,7 @@ def get_filters():
     city = input("Would you like to analyze chicago, new york city or washington?")
     while city not in CITY_DATA.keys():
             print('Please, type a valid city!')
-    
+            
     # TO DO: get user input for month (all, january, february, ... , june)
     MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
     month = input("Please, choose the month you want to analyze from january to june or you can type 'all'.")
@@ -30,7 +30,7 @@ def get_filters():
 
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
     DAYS = ['monday','tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all']
-    day = input("Please, choose the day you want to analyze from moneday to sunday or you can type 'all'.")
+    day = input("Please, choose the day you want to analyze from monday to sunday or you can type 'all'.")
     while day not in DAYS:
             print("your input should be either: monday, tuesday, wednesday, thursday, friday, saturday, sunday or 'all'.")
                   
@@ -46,7 +46,7 @@ def load_data(city, month, day):
         (str) city - name of the city to analyze
         (str) month - name of the month to filter by, or "all" to apply no month filter
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
-    Returns:
+    Returns:k
         df - Pandas DataFrame containing city data filtered by month and day
     """
 
@@ -62,15 +62,15 @@ def time_stats(df):
 
     # TO DO: display the most common month
     common_month = int(df['month'].mode()[0])
-    print("The most common month is {}.").format(common_month)
+    print("The most common month is {}.".format(common_month))
     
     # TO DO: display the most common day of week
     common_day = int(df['day'].mode()[0])
-    print("The most common day of week is {}.").format(common_day)
+    print("The most common day of week is {}.".format(common_day))
 
     # TO DO: display the most common start hour
     common_hour = int(df['hour'].mode()[0])
-    print("The most common start hour is {}.").format(common_hour)
+    print("The most common start hour is {}.".format(common_hour))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -84,19 +84,19 @@ def station_stats(df):
 
     # TO DO: display most commonly used start station
     common_start = int(df['Start Station'].mode()[0])
-    print("The most common start station is {}.").format(common_start)
+    print("The most common start station is {}.".format(common_start))
 
     # TO DO: display most commonly used end station
     common_end = int(df['End station'].mode()[0])
-    print("The most common end station is {}.").format(common_end)
+    print("The most common end station is {}.".format(common_end))
 
     # TO DO: display most frequent combination of start station and end station trip
     frequent_combination = df.groupby(['Start Station','End Station']).size().idmax() 
-    print("The most most frequent combination of start station and end station trip is {}.".format(frequent_combination)
+    print("The most most frequent combination of start station and end station trip is {}.".format(frequent_combination))
           
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)          
-
+          
 def trip_duration_stats(df):
 
     """Displays statistics on the total and average trip duration."""
@@ -109,8 +109,8 @@ def trip_duration_stats(df):
     print("The total travel time is: {}.").format(total_time)
 
     # TO DO: display mean travel time
-          mean_time = df['Trip Duration'].mean()
-          print("The mean travel time is: {}.").format(mean_time)
+    mean_time = df['Trip Duration'].mean()
+    print("The mean travel time is: {}.").format(mean_time)
           
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
