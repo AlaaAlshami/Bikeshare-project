@@ -9,7 +9,6 @@ CITY_DATA = { 'chicago': 'chicago.csv',
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
-
     Returns:
         (str) city - name of the city to analyze
         (str) month - name of the month to filter by, or "all" to apply no month filter
@@ -18,20 +17,32 @@ def get_filters():
     print('Hello! Let\'s explore some US bikeshare data!')
     
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    city = input("Would you like to analyze chicago, new york city or washington?")
-    while city not in CITY_DATA.keys():
-            print('Please, type a valid city!')
+    city = ' '
+    while city not in ['chicago', 'new york city', 'washington']:
+        city = input('Would you like to see data for chicago, new york city, or washington?')
+        if city in ['chicago', 'washington','new york city']:
+            break
+        else:
+            print("Please, enter a vslid city")          
             
     # TO DO: get user input for month (all, january, february, ... , june)
     MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
-    month = input("Please, choose the month you want to analyze from january to june or you can type 'all'.")
+    month = ' '
     while month not in MONTHS:
+         month = input("Please, choose the month you want to analyze from january to june or you can type 'all'.")
+         if month in MONTHS:
+            break
+         else:
             print("your input should be either: january, february, march, april, may, june or 'all'.")
 
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
     DAYS = ['monday','tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all']
-    day = input("Please, choose the day you want to analyze from monday to sunday or you can type 'all'.")
+    day = ' '
     while day not in DAYS:
+         day = input("Please, choose the day you want to analyze from monday to sunday or you can type 'all'.")
+         if day in DAYS:
+            break
+         else:
             print("your input should be either: monday, tuesday, wednesday, thursday, friday, saturday, sunday or 'all'.")
                   
     print('-'*40)
@@ -41,18 +52,31 @@ def get_filters():
 def load_data(city, month, day):
     """
     Loads data for the specified city and filters by month and day if applicable.
-
     Args:
         (str) city - name of the city to analyze
         (str) month - name of the month to filter by, or "all" to apply no month filter
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
-    Returns:k
+    Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
+    df=pd.read_csv(CITY_DATA[city])
+    df['Start Time']=pd.to_datetime(df['Start Time'])
+    
+    df['month']=df['Start Time'].dt.month
+    
+    df['day']=df['Start Time'].dt.day
+    
+    df['hour']=df['Start Time'].dt.hour
+    
+    if month != 'all':
+        MONTHS = ['january', 'february', 'march', 'april', 'may', 'june']
+        month = MONTHS.index(month) + 1
+        df = df[df['month'] == month]
 
-
+    if day != 'all':
+       df = df[df['day_of_week'] == day]
+    
     return df
-
 
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
@@ -65,7 +89,7 @@ def time_stats(df):
     print("The most common month is {}.".format(common_month))
     
     # TO DO: display the most common day of week
-    common_day = int(df['day'].mode()[0])
+    common_day = int(df['day_of_week'].mode()[0])
     print("The most common day of week is {}.".format(common_day))
 
     # TO DO: display the most common start hour
