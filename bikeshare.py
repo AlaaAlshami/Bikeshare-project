@@ -19,11 +19,11 @@ def get_filters():
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     city = ' '
     while city not in ['chicago', 'new york city', 'washington']:
-        city = input('Would you like to see data for chicago, new york city, or washington?')
+        city = input('Would you like to analyze data for chicago, new york city, or washington?')
         if city in ['chicago', 'washington','new york city']:
             break
         else:
-            print("Please, enter a vslid city")          
+            print("Please, enter a valid city")          
             
     # TO DO: get user input for month (all, january, february, ... , june)
     MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
@@ -74,7 +74,7 @@ def load_data(city, month, day):
         df = df[df['month'] == month]
 
     if day != 'all':
-       df = df[df['day_of_week'] == day]
+       df = df[df['day_of_week'] == day,:]
     
     return df
 
@@ -93,6 +93,7 @@ def time_stats(df):
     print("The most common day of week is {}.".format(common_day))
 
     # TO DO: display the most common start hour
+    df['start_hour'] = df['Start Time'].dt.hour
     common_hour = int(df['hour'].mode()[0])
     print("The most common start hour is {}.".format(common_hour))
 
