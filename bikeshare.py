@@ -90,9 +90,8 @@ def time_stats(df):
     start_time = time.time()
 
     # TO DO: display the most common month
-    common_month = df['month'].mode()[0]
-    print("The most common month is {}.".format(common_month))
-    
+    print("The most common month is: {}".format(
+        str(df['month'].mode().values[0])))    
     # TO DO: display the most common day of week
     common_day = df['day_of_week'].mode()[0]
     print("The most common day of week is {}.".format(common_day))
@@ -148,7 +147,7 @@ def trip_duration_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-def user_stats(df):
+def user_stats(df, city):
     """Displays statistics on bikeshare users."""
 
     print('\nCalculating User Stats...\n')
@@ -156,12 +155,13 @@ def user_stats(df):
 
     # TO DO: Display counts of user types
     print("The counts of user types:")
-    print(df['User Type'].value_counts())
+    print(df['User Type'].value_counts())    
     
-    # TO DO: Display counts of gender
-    print("The counts of gender:")
-    print(df['Gender'].value_counts())
-
+    if city != 'washington':
+        # Display counts of gender
+        print("The counts of gender:")
+        print(df['Gender'].value_counts())
+        
     # TO DO: Display earliest, most recent, and most common year of birth
     earliest = int(df['Birth Year'].min())
     most_recent =  int(df['Birth Year'].max())
@@ -180,7 +180,7 @@ def main():
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
-        user_stats(df)
+        user_stats(df, city)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
