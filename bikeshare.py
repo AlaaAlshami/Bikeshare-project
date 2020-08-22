@@ -22,7 +22,7 @@ def get_filters():
         if city in ['chicago', 'washington','new york city']:
             break
         else:
-            print("your input should be either: chicago, washington or new york city.")          
+            print("Please, enter a valid city")          
             
     # TO DO: get user input for month (all, january, february, ... , june)
     MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
@@ -91,8 +91,8 @@ def time_stats(df):
     start_time = time.time()
 
     # TO DO: display the most common month
-    common_month = df['month'].mode()[0]
-    print("The most common month is {}.".format(oommon_month))
+    print("The most common month is: {}".format(
+        str(df['month'].mode().values[0])))
     
     # TO DO: display the most common day of week
     common_day = df['day_of_week'].mode()[0]
