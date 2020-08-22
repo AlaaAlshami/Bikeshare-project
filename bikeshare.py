@@ -22,7 +22,7 @@ def get_filters():
         if city in ['chicago', 'washington','new york city']:
             break
         else:
-            print("Please, enter a valid city")          
+            print("your input should be either: chicago, washington or new york city.")          
             
     # TO DO: get user input for month (all, january, february, ... , june)
     MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
@@ -59,27 +59,28 @@ def load_data(city, month, day):
         df - Pandas DataFrame containing city data filtered by month and day
     """
     df = pd.read_csv(CITY_DATA[city])
-
-    # convert the Start Time column to datetime
+    
+    # Convert the Start and End Time columns to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['End Time'] = pd.to_datetime(df['End Time'])
-    
-        # extract month, day of week, hour from Start Time to create new columns
-    df['month'] = df['Start Time'].apply(lambda x: x.month)
-    df['day_of_week'] = df['Start Time'].apply(lambda x: x.strftime('%A'))
-    df['hour'] = df['Start Time'].dt.hour
 
-       # filter by month if applicable
+    # extract month and day of week from Start Time to create new columns
+    df['month'] = df['Start Time'].apply(lambda x: x.month)
+    df['day_of_week'] = df['Start Time'].apply(lambda x: x.strftime('%A').lower())
+    
+    # filter by month if applicable
     if month != 'all':
+        # use the index of the months list to get the corresponding int
         months = ['january', 'february', 'march', 'april', 'may', 'june']
         month = months.index(month) + 1
 
-        # filter by month to create the new dataframe
+    # filter by month to create the new dataframe
         df = df[df['month'] == month]
 
-        # filter by day of week if applicable
+    # filter by day of week if applicable
     if day != 'all':
-        df = df[df['day_of_week'] == day]
+        # filter by day of week to create the new dataframe
+     df = df[df['day_of_week'] == day]   
     
     return df
 
@@ -90,8 +91,9 @@ def time_stats(df):
     start_time = time.time()
 
     # TO DO: display the most common month
-    print("The most common month is: {}".format(
-        str(df['month'].mode().values[0])))    
+    common_month = df['month'].mode()[0]
+    print("The most common month is {}.".format(oommon_month))
+    
     # TO DO: display the most common day of week
     common_day = df['day_of_week'].mode()[0]
     print("The most common day of week is {}.".format(common_day))
@@ -161,16 +163,20 @@ def user_stats(df, city):
         # Display counts of gender
         print("The counts of gender:")
         print(df['Gender'].value_counts())
-        
+       
+def Birth_Year(df):    
+ if 'Birth_Year' != 'washington':
     # TO DO: Display earliest, most recent, and most common year of birth
-    earliest = int(df['Birth Year'].min())
-    most_recent =  int(df['Birth Year'].max())
-    most_common = int(df['Birth Year'].mode()[0])
+    earliest = int(df['birth_year'].min())
+    most_recent = int(df['birth_year'].max())
+    most_common = int(df['birth_year'].mode())
     print("The earliest birth is: {}.".format(earliest))
     print(" The most recent birth is: {}.".format(most_recent))
     print(" The most common birth is: {}.".format(most_common))
     print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*40)
+ else:
+        print("Data is not available in your city")
+print('-'*40)
     
 def main():
     while True:
