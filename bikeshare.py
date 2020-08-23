@@ -178,6 +178,21 @@ def Birth_Year(df):
         print("Data is not available in your city")
 print('-'*40)
     
+    
+def display_raw_data(df):
+    
+    data = 0
+    while True:
+       display = input('Would you like to view next five lines of the raw data? yes or no.')
+       if display == 'no':
+            return
+       elif display == 'yes':
+        data += 5
+        print(df.iloc[data:data+5])
+       else:
+        print('Your input should be either: yes or no.')
+        
+       
 def main():
     while True:
         city, month, day = get_filters()
@@ -187,11 +202,11 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df, city)
-
+        display_raw_data(df)
+        
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
-
 
 if __name__ == "__main__":
 	main()
